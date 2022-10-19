@@ -16,10 +16,12 @@ export default function Header({ currentUser, onSignOut }) {
           </NavLink>
         </Route>
         <Route path="/">
-          <p className="header__text">{currentUser.email}</p>
-          <NavLink onClick={onSignOut} to="/sign-in" className="header__link">
-            Выйти
-          </NavLink>
+          <div className="header__link-block">
+            <p className="header__text">{currentUser.email}</p>
+            <NavLink onClick={onSignOut} to="/sign-in" className="header__link">
+              Выйти
+            </NavLink>
+          </div>
         </Route>
       </Switch>
     </header>

@@ -6,7 +6,7 @@ class Auth {
     this._headers = headers;
   }
 
-  _handleResponse(res, type){
+  _handleResponse(res, type) {
     if (res.ok) {
       return res.json();
     } else {

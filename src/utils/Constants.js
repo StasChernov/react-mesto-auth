@@ -31,5 +31,5 @@ export const headers = {
 };
 
 export const authHeaders = {
-  "Content-Type": "application/json"
+  "Content-Type": "application/json",
 };

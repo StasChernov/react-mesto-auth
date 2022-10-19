@@ -1,35 +1,15 @@
 import React, { useState } from "react";
-import Auth from "../utils/Auth";
 import { withRouter } from "react-router-dom";
-import InfoTooltip from "./InfoTooltip";
 
-function Login(props) {
+function Login({ onLogin }) {
   const [userData, setUserData] = useState({
     email: "",
     password: "",
   });
 
-  const [isOpen, setIsOpen] = useState(false);
-
-  function handleClose() {
-    setIsOpen(false);
-  }
-
   function handleSubmit(e) {
     e.preventDefault();
-
-    Auth.signIn(userData)
-      .then((data) => {
-        if (data.token) {
-          localStorage.setItem("token", data.token);
-          props.onLogin(userData.email);
-          props.history.push("/");
-        }
-      })
-      .catch((err) => {
-        setIsOpen(true);
-        console.log("%c" + err, "color: #dd3333");
-      });
+    onLogin(userData);
   }
 
   function handleChange(e) {
@@ -80,7 +60,6 @@ function Login(props) {
           </button>
         </form>
       </main>
-      <InfoTooltip isOk={false} isOpen={isOpen} onClose={handleClose} />
     </>
   );
 }

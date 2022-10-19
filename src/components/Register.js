@@ -1,30 +1,11 @@
 import React, { useState } from "react";
 import { NavLink, withRouter } from "react-router-dom";
-import auth from "../utils/Auth";
-import InfoTooltip from "./InfoTooltip";
 
-function Register(props) {
+function Register({ onRegister }) {
   const [userData, setUserData] = useState({
     email: "",
     password: "",
   });
-
-  const [tooltip, setTooltip] = useState({
-    isOpen: false,
-    isOk: false,
-    isConfirm: false,
-  });
-
-  function handleClose() {
-    setTooltip({
-      ...tooltip,
-      isOpen: false,
-    });
-
-    if (tooltip.isOk) {
-      props.history.push("/sign-in");
-    }
-  }
 
   function handleChange(e) {
     const name = e.target.name;
@@ -38,23 +19,7 @@ function Register(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    auth
-      .signUp(userData)
-      .then(() => {
-        setTooltip({
-          ...tooltip,
-          isOpen: true,
-          isOk: true,
-        });
-      })
-      .catch((err) => {
-        console.log("%c" + err, "color: #dd3333");
-        setTooltip({
-          ...tooltip,
-          isOpen: true,
-          isOk: false,
-        });
-      });
+    onRegister(userData);
   }
 
   return (
@@ -101,11 +66,6 @@ function Register(props) {
           </NavLink>
         </div>
       </main>
-      <InfoTooltip
-        isOk={tooltip.isOk}
-        isOpen={tooltip.isOpen}
-        onClose={handleClose}
-      />
     </>
   );
 }

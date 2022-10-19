@@ -8,7 +8,7 @@ import ImagePopup from "./ImagePopup";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import api from "../utils/Api";
 
-export default function App() {
+export default function Places({ loggedIn }) {
   const [cards, setCards] = useState([]);
   const [currentUser, setCurrentUser] = useState({
     name: "Станислав",
@@ -17,13 +17,15 @@ export default function App() {
   });
 
   React.useEffect(() => {
-    Promise.all([api.getInitialCards(), api.getUserInfo()])
-      .then(([cards, user]) => {
-        setCurrentUser(user);
-        setCards(cards);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    if (loggedIn) {
+      Promise.all([api.getInitialCards(), api.getUserInfo()])
+        .then(([cards, user]) => {
+          setCurrentUser(user);
+          setCards(cards);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [loggedIn]);
 
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
